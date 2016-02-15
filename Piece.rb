@@ -1,24 +1,21 @@
 # coding: utf-8
 
 class Piece
-  attr_reader :name, :value
+  attr_reader :player, :board
 
   def initialize(board, player)
     @player = player
     @board = board
   end
 
+  def to_s
+    symbol.colorize(self.color.to_sym)
+  end
 
 
 end
 
 class VoidPiece
-  attr_reader :name, :value
-
-  def initialize(board)
-
-
-  end
 
   def to_s
     "     "
@@ -26,8 +23,11 @@ class VoidPiece
 end
 
 class SlidingPiece < Piece
+  def diagonal
 
-  def initialize(board, player)
+  end
+
+  def orthogonal
 
   end
 
@@ -37,115 +37,100 @@ end
 class Bishop < SlidingPiece
   attr_reader :player
 
-  def initialize(board, player)
-    @player = player
-  end
 
-  def to_s
-    if player.color == 'black'
-      "  ♗  ".colorize(:black)
-    else
-      "  ♗  ".colorize(:white)
-    end
-  end
 
+  def symbol
+    "  ♗  "
+  end
 
 end
 
 class Rook < SlidingPiece
-  attr_reader :player
 
-  def initialize(board, player)
-    @player = player
+  def symbol
+    "  ♖  "
   end
 
-  def to_s
-    if player.color == 'black'
-      "  ♖  ".colorize(:black)
-    else
-      "  ♖  ".colorize(:white)
-    end
-  end
 
 end
 
 
 class Queen < SlidingPiece
-  attr_reader :player
 
-  def initialize(board, player)
-    @player = player
-  end
 
-  def to_s
-    if player.color == 'black'
-      "  ♕  ".colorize(:black)
-    else
-      "  ♕  ".colorize(:white)
-    end
+
+  def symbol
+    "  ♕  "
   end
 
 end
 
 class SteppingPiece < Piece
-  def initialize(board, player)
 
-  end
-
-
-
-  def move
-    possible_moves = []
+  def possible_moves(pos)
+    self.deltas.each do |position|
+      next unless board.in_bounds?([row + position[0], column + position[1]])
+      possibilities << [row + position[0], column + position[1]]
+    end
+    possibilities
   end
 
 end
 
 class Knight < SteppingPiece
-  attr_reader :player
+
+  DELTA = [
+        [2,1],
+        [2,-1],
+        [1,2],
+        [1,-2],
+        [-1,2],
+        [-1,-2],
+        [-2,1],
+        [-2,-1]
+      ]
 
   def initialize(board, player)
     @player = player
   end
 
-  def to_s
-    if player.color == 'black'
-      "  ♘  ".colorize(:black)
-    else
-      "  ♘  ".colorize(:white)
-    end
+  def deltas
+    DELTA
   end
 
+
+  def symbol
+    "  ♘  "
+  end
 end
 
 class King < SteppingPiece
-  attr_reader :player
 
-  def initialize(board, player)
-    @player = player
+  DELTA = [
+    [1,1],
+    [1,0],
+    [1,-1],
+    [0,1],
+    [0,-1],
+    [-1,1],
+    [-1,0],
+    [-1,-1]
+  ]
+
+  def deltas
+    DELTA
   end
 
-  def to_s
-    if player.color == 'black'
-      "  ♔  ".colorize(:black)
-    else
-      "  ♔  ".colorize(:white)
-    end
+  def symbol
+    "  ♔  "
   end
 
 end
 
 class Pawn < Piece
-  attr_reader :player
-  def initialize(board, player)
-    @player = player
-  end
 
-  def to_s
-    if player.color == 'black'
-      "  ♙  ".colorize(:black)
-    else
-      "  ♙  ".colorize(:white)
-    end
+  def symbol
+    "  ♙  "
   end
 
 end

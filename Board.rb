@@ -97,6 +97,6 @@ class Board
   end
 
 end
-
-b = Board.new
-b.player_1.move
+# 
+# b = Board.new
+# b.player_1.move
