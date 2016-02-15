@@ -3,12 +3,12 @@ require_relative 'Piece'
 require_relative 'Player'
 
 class Board
-  attr_accessor :grid
+  attr_accessor :grid, :player_1, :player_2
 
-  def initialize (player_1, player_2)
+  def initialize
     @grid = Array.new(8){Array.new(8)}
-    @player_1  = player_1
-    @player_2 = player_2
+    @player_1 = Player.new(self,'white')
+    @player_2 = Player.new(self,'black')
     populate
   end
 
@@ -22,22 +22,26 @@ class Board
     array = [1,6]
     array.each do |row|
       @grid[row].each_index do |space|
-        @grid[row][space] = Pawn.new(self)
+        @grid[row][space] = Pawn.new(self,@player_2) if row == 1
+        @grid[row][space] = Pawn.new(self,@player_1) if row == 6
       end
     end
   end
 
   def populate_other
     knight_pos = [[0,1], [0,6], [7,1], [7,6]]
-    knight_pos.each { |pos| @grid[pos[0]][pos[1]] = Knight.new(self) }
-    rook_pos = [[0,0], [7,0], [0,7], [7,7]]
-    rook_pos.each { |pos| @grid[pos[0]][pos[1]] = Rook.new(self) }
+    knight_pos.take(2).each { |pos| @grid[pos[0]][pos[1]] = Knight.new(self,@player_2) }
+    knight_pos.drop(2).each { |pos| @grid[pos[0]][pos[1]] = Knight.new(self,@player_1) }
+    rook_pos = [[0,0], [0,7], [7,0], [7,7]]
+    rook_pos.take(2).each { |pos| @grid[pos[0]][pos[1]] = Rook.new(self,@player_2) }
+    rook_pos.drop(2).each { |pos| @grid[pos[0]][pos[1]] = Rook.new(self,@player_1) }
     bishop_pos = [[0,2], [0,5], [7,2], [7,5]]
-    bishop_pos.each { |pos| @grid[pos[0]][pos[1]] = Bishop.new(self) }
-    queens_pos = [[0,3], [7,3]]
-    queens_pos.each { |pos| @grid[pos[0]][pos[1]] = Queen.new(self) }
-    kings_pos = [[0,4], [7,4]]
-    kings_pos.each { |pos| @grid[pos[0]][pos[1]] = King.new(self) }
+    bishop_pos.take(2).each { |pos| @grid[pos[0]][pos[1]] = Bishop.new(self, @player_2) }
+    bishop_pos.drop(2).each { |pos| @grid[pos[0]][pos[1]] = Bishop.new(self, @player_1) }
+    @grid[0][3] = Queen.new(self,@player_2)
+    @grid[7][3] = Queen.new(self,@player_1)
+    @grid[0][4] = King.new(self,@player_2)
+    @grid[7][4] = King.new(self,@player_1)
   end
 
   def populate_board_spaces
@@ -94,6 +98,5 @@ class Board
 
 end
 
-b = Board.new("a","b")
-p1 = Player.new(b)
-p1.move
+b = Board.new
+b.player_1.move

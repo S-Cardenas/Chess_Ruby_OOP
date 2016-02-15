@@ -4,10 +4,10 @@ class Piece
   attr_reader :name, :value
 
   def initialize(board, player)
-
     @player = player
     @board = board
   end
+
 
 
 end
@@ -15,7 +15,7 @@ end
 class VoidPiece
   attr_reader :name, :value
 
-  def initialize(board, player)
+  def initialize(board)
 
 
   end
@@ -35,36 +35,54 @@ end
 
 
 class Bishop < SlidingPiece
+  attr_reader :player
 
   def initialize(board, player)
+    @player = player
   end
 
   def to_s
-    "  ♗  "
+    if player.color == 'black'
+      "  ♗  ".colorize(:black)
+    else
+      "  ♗  ".colorize(:white)
+    end
   end
 
 
 end
 
 class Rook < SlidingPiece
+  attr_reader :player
 
   def initialize(board, player)
+    @player = player
   end
 
   def to_s
-    "  ♖  "
+    if player.color == 'black'
+      "  ♖  ".colorize(:black)
+    else
+      "  ♖  ".colorize(:white)
+    end
   end
 
 end
 
 
 class Queen < SlidingPiece
+  attr_reader :player
 
   def initialize(board, player)
+    @player = player
   end
 
   def to_s
-    "  ♕  "
+    if player.color == 'black'
+      "  ♕  ".colorize(:black)
+    else
+      "  ♕  ".colorize(:white)
+    end
   end
 
 end
@@ -83,34 +101,51 @@ class SteppingPiece < Piece
 end
 
 class Knight < SteppingPiece
+  attr_reader :player
 
   def initialize(board, player)
+    @player = player
   end
 
   def to_s
-    "  ♘  "
+    if player.color == 'black'
+      "  ♘  ".colorize(:black)
+    else
+      "  ♘  ".colorize(:white)
+    end
   end
 
 end
 
 class King < SteppingPiece
+  attr_reader :player
 
   def initialize(board, player)
+    @player = player
   end
 
   def to_s
-    "  ♔  "
+    if player.color == 'black'
+      "  ♔  ".colorize(:black)
+    else
+      "  ♔  ".colorize(:white)
+    end
   end
 
 end
 
 class Pawn < Piece
+  attr_reader :player
   def initialize(board, player)
-
+    @player = player
   end
 
   def to_s
-    "  ♙  "
+    if player.color == 'black'
+      "  ♙  ".colorize(:black)
+    else
+      "  ♙  ".colorize(:white)
+    end
   end
 
 end
