@@ -35,8 +35,17 @@ class Display
 
   def render
     system("clear")
-    puts "Fill the grid!"
+    puts "Please select a square."
     puts "Arrow keys, WASD, or vim to move, space or enter to confirm."
-    build_grid.each { |row| puts row.join }
+    build_grid.each_with_index do  |row, idx|
+      print idx + 1
+      puts row.join
+    end
+    out = ' '
+    "ABCDEFGH".split('').each do |letter|
+      out += "  " + letter + "  "
+    end
+    puts out
   end
+
 end
