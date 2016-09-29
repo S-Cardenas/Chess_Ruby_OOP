@@ -1,7 +1,6 @@
 require 'byebug'
-require_relative 'board'
+require_relative 'Board'
 #might end up needing player
-
 
 class Game
 
@@ -21,7 +20,7 @@ class Game
       take_turn
       switch_player
       p "#{current_player.name} is in check!" if @current_player.king.in_check?(@current_player)
-      
+
     end
     puts "It ended...somehow?"
   end
