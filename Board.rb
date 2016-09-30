@@ -1,6 +1,6 @@
-require_relative 'display0'
-require_relative 'Piece'
-require_relative 'Player'
+require_relative 'lib/player/display0'
+require_relative 'lib/pieces/pieces'
+require_relative 'lib/player/Player'
 require 'byebug'
 
 class Board

@@ -8,4 +8,4 @@ The game has a graphical user interface via the colorize gem.
 * cd into the root folder and execute ruby Game.rb
 
 ##**Views**
-<img src="./Selection_002.png" width="500px"/>
+<img src="./assets/images/Selection_002.png" width="500px"/>
